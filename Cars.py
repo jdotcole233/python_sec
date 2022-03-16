@@ -9,13 +9,13 @@ class Cars:
             print("List expected..\n")
             return 
 
-        print("{:<8} {:<15} {:<10}".format('Name', 'Color', 'Price'))
+        print("{:<20} {:<15} {:<10}".format('Name', 'Color', 'Price'))
         for car in cars_:
             if (type(car) is not dict):
                 print("Dict expected..\n")
                 break
             name, color, price = car.values()
-            print("{:<8} {:<15} {:<10}".format(name, color, price), sep="\n\n")
+            print("{:<20} {:<15} {:<10}".format(name, color, price), sep="\n\n")
     
     def compareprices(self):
         cheapestcar = self.cars[0]
@@ -34,25 +34,30 @@ def interactiveInput():
     car_list = list()
     try:
         limit = int(input("How many cars do you want to add (default = 3): "))
-
         if not limit:
             limit = 3
-    
+
+        print("All fields are mandatory!!..") 
         for i in range(limit):
             car_instance = {}
-            try:
-                name = input("Input brand of car {}: ".format(i))
-                color = input("Input color of car {}: ".format(i))
-                price = float(input("Input price of car {}: ".format(i)))
+            try: 
+                name = input("Input brand of car {}: ".format(i + 1))
+                color = input("Input color of car {}: ".format(i + 1))
+                price = float(input("Input price of car {}: ".format(i + 1)))
+
             except ValueError:
-                print("Wrong value")
+                if (not name) or (not color) or (not price):
+                    print("Some values were left blank and will not be added to the list")
+                else:
+                    print("Wrong value")
             except KeyboardInterrupt:
                 print("Do you want to end program")
             
-            car_instance['name'] = name
-            car_instance['color'] = color
-            car_instance['price'] = price
-            car_list.append(car_instance)
+            if name and color and price:
+                car_instance['name'] = name
+                car_instance['color'] = color
+                car_instance['price'] = price
+                car_list.append(car_instance)
             print('\n')
 
     except ValueError:
